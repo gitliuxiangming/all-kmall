@@ -1,7 +1,7 @@
 import * as types from './actionTypes.js'
 import axios from 'axios';
 import { message } from 'antd'
-import { request } from 'util'
+import { request,setUserName } from 'util'
 import { ADMIN_LOGIN } from 'api'
 const getLoginRequestAction=()=>{
 	return {
@@ -49,6 +49,7 @@ export const getLoginAction = (values)=>{
 	    	// console.log(result)
 	    	if(result.code == 0){//登录成功
 	    		//跳转到后台首页
+	    		setUserName(result.data.username)
 	    		window.location.href = "/"
 	    	}else if(result.code == 1){
 	    		message.error(result.message)
