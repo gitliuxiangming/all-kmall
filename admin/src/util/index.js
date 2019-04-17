@@ -12,11 +12,28 @@ export const request = (options)=>{
 		const params = {
         	method:options.method || 'get',	
 			url:options.url || '',
-			data:options.data || ''
+			data:options.data || '',
+			withCredentials:true
+		}
+		switch(params.method.toUpperCase()){
+			case 'GET':
+			case 'DELETE':
+				params.params = options.data
+				break
+			default:
+				params.data = options.data
 		}
 		axios(params)
 		.then(result=>{
-			resolve(result.data);
+			const data = result.data
+			if(data == 10){//没有权限
+				//移除前端登录信息
+				removeUserName()
+				window.ocation.href = '/login'
+				reject('没有权限')
+			}else{
+				resolve(result.data);
+			}
 		})
 		.catch(err=>{
 			reject(err)

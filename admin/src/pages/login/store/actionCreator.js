@@ -5,7 +5,6 @@
 * @Last Modified time: 2019-04-16 18:53:44
 */
 import * as types from './actionTypes.js'
-import axios from 'axios';
 import { message } from 'antd';
 
 import { request,setUserName } from 'util'

@@ -93,14 +93,14 @@ const mapStateToProps = (state)=>{
 //4.返回对象的属性对应的值是一个方法
 const mapDispatchToProps = (dispatch)=>{
 	return {
-    handleLogin:(values)=>{
-      //1.派发登录的action
-      //2.其实这个登录的action是一个能够发送ajax请求的函数
-      //3.dispatch能够派发函数是因为引用了redux-thunk
-      //4.使用redux-thunk派发一个函数action的时候,会把dispatch方法自身传递到该函数action中
-      const action = actionCreator.getLoginAction(values);
-      dispatch(action)
-    }
+	    handleLogin:(values)=>{
+	      //1.派发登录的action
+	      //2.其实这个登录的action是一个能够发送ajax请求的函数
+	      //3.dispatch能够派发函数是因为引用了redux-thunk
+	      //4.使用redux-thunk派发一个函数action的时候,会把dispatch方法自身传递到该函数action中
+	      const action = actionCreator.getLoginAction(values);
+	      dispatch(action)
+	    }
 	}
 }
 //1.connect方法第一个参数指定映射数据的方法

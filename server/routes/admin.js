@@ -31,6 +31,25 @@ router.get("/init",(req,res)=>{
 	})
 });
 */
+/*
+router.get("/init",(req,res)=>{
+	//插入数据到数据库
+	const users = [];
+	for(let i=0;i<200;i++){
+		users.push({
+			username:'test'+i,
+			password:hmac('test'+i),
+			phone:'15139103'+parseInt(Math.random()*10000),
+			email:'test'+i+'@kuazhu.com'
+		})
+	}
+	UserModel.insertMany(users)
+	.then(data=>{
+		console.log('添加成功')
+		res.send('ok')
+	})
+});
+*/
 //用户登录
 router.post("/login",(req,res)=>{
 	let body = req.body;
