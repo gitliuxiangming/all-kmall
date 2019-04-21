@@ -2,7 +2,7 @@
 * @Author: TomChen
 * @Date:   2019-04-11 18:56:06
 * @Last Modified by:   TomChen
-* @Last Modified time: 2019-04-12 20:51:38
+* @Last Modified time: 2019-04-17 20:46:45
 */
 import { fromJS } from 'immutable'
 
@@ -13,26 +13,22 @@ const defaultState = fromJS({
 	current:1,
 	pageSize:0,
 	total:0,
-	isFetching:false
+	isFetching:false	
 })
-
-
 export default (state=defaultState,action)=>{
 	if(action.type == types.SET_PAGE){
-		console.log(payload)
-		state.merge({
+		return state.merge({
 			list:fromJS(action.payload.list),
-			current:fromJS(action.payload.current),
-			pageSize:fromJS(action.payload.pageSize),
-			total:fromJS(action.payload.total)
+			current:action.payload.current,
+			pageSize:action.payload.pageSize,
+			total:action.payload.total				
 		})
 	}
 	if(action.type == types.PAGE_REQUEST){
 		return state.set('isFetching',true)
 	}
-	if(action.type == types.PAGE_DOWN){
+	if(action.type == types.PAGE_DONE){
 		return state.set('isFetching',false)
-	}
-
+	}	
 	return state;
 }

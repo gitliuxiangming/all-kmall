@@ -2,7 +2,7 @@
 * @Author: Tom
 * @Date:   2018-08-06 09:23:30
 * @Last Modified by:   TomChen
-* @Last Modified time: 2019-04-15 18:25:38
+* @Last Modified time: 2019-04-17 20:16:55
 */
 const Router = require('express').Router;
 
@@ -33,19 +33,17 @@ router.get("/init",(req,res)=>{
 */
 /*
 router.get("/init",(req,res)=>{
-	//插入数据到数据库
 	const users = [];
-	for(let i=0;i<200;i++){
+	for(let i = 0;i<500;i++){
 		users.push({
 			username:'test'+i,
 			password:hmac('test'+i),
-			phone:'15139103'+parseInt(Math.random()*10000),
+			phone:'1368182'+parseInt(Math.random()*10000),
 			email:'test'+i+'@kuazhu.com'
 		})
 	}
 	UserModel.insertMany(users)
-	.then(data=>{
-		console.log('添加成功')
+	.then(result=>{
 		res.send('ok')
 	})
 });

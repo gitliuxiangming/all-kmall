@@ -2,7 +2,7 @@
 * @Author: TomChen
 * @Date:   2019-04-09 19:29:30
 * @Last Modified by:   TomChen
-* @Last Modified time: 2019-04-16 18:07:11
+* @Last Modified time: 2019-04-18 19:14:40
 */
 
 import React,{ Component } from 'react'
@@ -17,7 +17,6 @@ import { connect } from 'react-redux'
 //3.而'./store/index.js'中的actionCreator是引入'./actionCreator.js'中的所有action的别名
 import { actionCreator } from './store'
 
-import axios from 'axios'
 import {
   Form, Icon, Input, Button, message,
 } from 'antd';
@@ -93,14 +92,14 @@ const mapStateToProps = (state)=>{
 //4.返回对象的属性对应的值是一个方法
 const mapDispatchToProps = (dispatch)=>{
 	return {
-	    handleLogin:(values)=>{
-	      //1.派发登录的action
-	      //2.其实这个登录的action是一个能够发送ajax请求的函数
-	      //3.dispatch能够派发函数是因为引用了redux-thunk
-	      //4.使用redux-thunk派发一个函数action的时候,会把dispatch方法自身传递到该函数action中
-	      const action = actionCreator.getLoginAction(values);
-	      dispatch(action)
-	    }
+    handleLogin:(values)=>{
+      //1.派发登录的action
+      //2.其实这个登录的action是一个能够发送ajax请求的函数
+      //3.dispatch能够派发函数是因为引用了redux-thunk
+      //4.使用redux-thunk派发一个函数action的时候,会把dispatch方法自身传递到该函数action中
+      const action = actionCreator.getLoginAction(values);
+      dispatch(action)
+    }
 	}
 }
 //1.connect方法第一个参数指定映射数据的方法

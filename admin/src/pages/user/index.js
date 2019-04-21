@@ -2,18 +2,15 @@
 * @Author: TomChen
 * @Date:   2019-04-09 19:29:30
 * @Last Modified by:   TomChen
-* @Last Modified time: 2019-04-16 20:09:36
+* @Last Modified time: 2019-04-18 18:10:03
 */
 
 import React,{ Component } from 'react'
-import { Table, Divider, Tag } from 'antd';
 import { connect } from 'react-redux'
+import { Table, Breadcrumb } from 'antd';
+import moment from 'moment'
 import { actionCreator } from './store'
 import Layout from 'common/layout'
-
-
-import './index.css'
-
 
 const columns = [{
   title: '用户名',
@@ -23,7 +20,7 @@ const columns = [{
   title: '是否管理员',
   dataIndex: 'isAdmin',
   key: 'isAdmin',
-  render:(isAdmin)=>isAdmin?'是':'否'
+  render:isAdmin=>isAdmin?'是':'否'
 }, {
   title: 'email',
   dataIndex: 'email',
@@ -37,26 +34,31 @@ const columns = [{
   dataIndex: 'createdAt',
   key: 'createdAt',
 }];
+
 class User extends Component{
 	componentDidMount(){
-		this.props.handlePage()
+		this.props.handlePage(1);
 	}
     render(){
     	const { list,current,pageSize,total,handlePage,isFetching } = this.props;
-    	const dataSource = list.map((user)=>{
+    	const dataSource = list.map(user=>{
     		return {
-    			key: user.get('_id'),
+				key:user.get('_id'),
 				username: user.get('username'),
-			    isAdmin: user.get('isAdmin'),
+				isAdmin: user.get('isAdmin'),
 				email: user.get('email'),
 				phone:user.get('phone'),
-				createdAt:user.get('createdAt')
+				createdAt:moment(user.get('createdAt')).format('YYYY-MM-DD HH:mm:ss')
     		}
-    	}).toJS()//将immutable数据转换为数组
-    	console.log(list)
+    	}).toJS()
         return (
         	<div className="User">
         		<Layout>
+              <Breadcrumb style={{ margin: '16px 0' }}>
+                <Breadcrumb.Item>首页</Breadcrumb.Item>
+                <Breadcrumb.Item>用户管理</Breadcrumb.Item>
+                <Breadcrumb.Item>用户列表</Breadcrumb.Item>
+              </Breadcrumb>            
         			<Table 
         				dataSource={dataSource} 
         				columns={columns} 
@@ -65,8 +67,8 @@ class User extends Component{
         					pageSize:pageSize,
         					total:total
         				}}
-        				onChange = {(page)=>{
-        					handlePage(page)
+        				onChange={(page)=>{
+        					handlePage(page.current)
         				}}
         				loading={{
         					spinning:isFetching,
@@ -79,26 +81,22 @@ class User extends Component{
     }
 }
 
-
 const mapStateToProps = (state)=>{
 	return {
 		list:state.get('user').get('list'),
 		current:state.get('user').get('current'),
 		pageSize:state.get('user').get('pageSize'),
-		total:state.get('user').get('total'),
-		isFetching:state.get('user').get('isFetching')
+		total:state.get('user').get('total'),	
+		isFetching:	state.get('user').get('isFetching'),	
 	}
 }
 
-const mapDispatchToProps = (dispatch)=>{
+const mapDispatchToProps = (dispath)=>{
 	return {
-	    handlePage:(page)=>{
-	    	const action = actionCreator.getPageAction();
-	    	dispatch(action)
-	    }
+		handlePage:(page)=>{
+			const action = actionCreator.getPageAction(page)
+			dispath(action)
+		}
 	}
 }
-
-
-
-export default connect(mapStateToProps,mapDispatchToProps)(User);
+export default connect(mapStateToProps,mapDispatchToProps)(User)
